@@ -1,0 +1,700 @@
+/* ================= GLOBAL CONTEXT ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0F291E 10%, #1B4332 60%, #40916C 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* TEXTOS EXTERIORES DEL SIMULADOR STACK */
+.academic-context {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    color: white;
+    z-index: 1;
+}
+.uv-title {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+}
+.uv-faculty {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.dev-context {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    text-align: right;
+    color: white;
+    z-index: 1;
+}
+.dev-title {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+}
+.dev-name {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 4px;
+}
+
+/* 📱 TELÉFONO MÁS GRANDE Y GRUESO (Se nota imponente en pantalla) */
+.phone-container {
+    width: 412px;
+    height: 892px;
+    min-width: 412px;
+    min-height: 892px;
+    background-color: #F4F7F5;
+    border-radius: 48px; 
+    border: 24px solid #1A1C1A; /* Marco ancho de alta fidelidad */
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    /* Incrementado a 1.1 para aumentar el tamaño notablemente en tu laptop */
+    transform: scale(1.1); 
+}
+
+/* Ajustes responsivos sutiles para que NO se haga chiquito en resoluciones estándar */
+@media (max-height: 960px) {
+    .phone-container {
+        transform: scale(1.0);
+    }
+}
+@media (max-height: 840px) {
+    .phone-container {
+        transform: scale(0.9); /* Límite máximo de reducción para que conserve su gran tamaño */
+    }
+}
+
+.phone-screen {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: 24px; 
+    overflow: hidden;
+}
+
+/* ENRUTADOR SINGLE PAGE */
+.page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #F4F7F5;
+    display: none;
+    flex-direction: column;
+}
+.page.active {
+    display: flex;
+}
+
+/* ================= HEADER DE LA APP (AppBar) ================= */
+.app-header {
+    width: 100%;
+    height: 56px;
+    background-color: #1B4332;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 10;
+    flex-shrink: 0;
+}
+.header-title {
+    font-size: 20px;
+    font-weight: bold;
+    flex: 1;
+    text-align: left;
+    margin-left: 24px;
+}
+
+/* ☰ BOTÓN DE MENÚ LATERAL */
+.icon-btn-menu {
+    background: none;
+    border: none;
+    width: 24px;
+    height: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+}
+.menu-bar {
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    border-radius: 1px;
+}
+.icon-btn-logout {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+/* CONTENIDO CON SCROLL CONTROLADO */
+.page-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+}
+.page-content::-webkit-scrollbar {
+    display: none;
+}
+
+/* ================= VISTA LOGIN (Letras Grandes) ================= */
+.login-center {
+    width: 100%;
+    height: 100%;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+}
+.app-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #1B4332;
+    margin-bottom: 8px;
+}
+.app-subtitle {
+    color: grey;
+    font-size: 15px;
+    margin-bottom: 48px;
+}
+.input-group {
+    width: 100%;
+    margin-bottom: 18px;
+}
+.input-group input {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    outline: none;
+}
+.input-group input:focus {
+    border-color: #1B4332;
+}
+
+.btn {
+    width: 100%;
+    height: 54px;
+    border: none;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.btn-login {
+    background-color: #2D6A4F;
+    color: white;
+}
+.btn-primary {
+    background-color: #2D6A4F;
+    color: white;
+    border-radius: 12px;
+}
+.btn-text {
+    background: none;
+    border: none;
+    color: #2D6A4F;
+    margin-top: 28px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ELEMENTOS DEL PANEL DE CONTROL */
+.saludo {
+    font-size: 14px;
+    color: grey;
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+.section-main-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1B4332;
+    margin-bottom: 12px;
+}
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #1B4332;
+    margin-top: 24px;
+    margin-bottom: 10px;
+}
+
+/* TARJETAS CONTENEDORAS */
+.card {
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    margin-bottom: 14px;
+}
+
+.card-status {
+    display: flex;
+    flex-direction: column;
+}
+.status-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+.status-msg {
+    font-weight: 600;
+    font-size: 13px;
+    color: #333;
+}
+.status-pct {
+    font-weight: bold;
+    color: #2D6A4F;
+}
+.progress-container {
+    width: 100%;
+    height: 4px;
+    background-color: rgba(76, 175, 80, 0.2);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 14px;
+}
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background-color: #40916C;
+}
+
+/* ================= 🛠️ RADIAL GAUGES ================= */
+.gauges-row {
+    display: flex;
+    gap: 8px;
+}
+.gauge-card {
+    flex: 1;
+    background: white;
+    border-radius: 12px;
+    padding: 12px 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.gauge-title {
+    font-size: 12px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 4px;
+}
+.gauge-wrapper {
+    width: 80px;
+    height: 55px;
+    position: relative;
+}
+svg {
+    width: 100%;
+    height: 100%;
+}
+.gauge-bg {
+    fill: none;
+    stroke: #eee;
+    stroke-width: 8;
+    stroke-linecap: round;
+}
+.gauge-fill {
+    fill: none;
+    stroke-width: 8;
+    stroke-linecap: round;
+    transition: stroke-dasharray 0.8s ease-out;
+}
+.fill-green { stroke: green; }
+.fill-blue { stroke: blue; }
+.fill-orange { stroke: orange; }
+
+.needle {
+    stroke: #333;
+    stroke-width: 3;
+    stroke-linecap: round;
+    transform-origin: 50px 50px; 
+    transition: transform 0.8s ease-out;
+}
+.gauge-value {
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: 4px;
+}
+.val-green { color: green; }
+.val-blue { color: blue; }
+.val-orange { color: orange; }
+
+/* ================= GRÁFICA SEMANAL DE BARRAS ================= */
+.chart-indicators {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 24px;
+}
+.ind {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: #555;
+    font-weight: 500;
+}
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+.bg-green { background-color: green; }
+.bg-blue { background-color: blue; }
+.bg-orange { background-color: orange; }
+
+.chart-bars-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 110px;
+}
+.bar-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 35px;
+}
+.bar-tag {
+    font-size: 9px;
+    font-weight: bold;
+    margin-bottom: 2px;
+    height: 11px;
+}
+.font-green { color: green; }
+
+.bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 65px;
+}
+.bar {
+    width: 6px;
+    border-radius: 3px;
+    transition: height 0.8s ease-out;
+}
+.bar-day {
+    font-size: 11px;
+    color: grey;
+    font-weight: bold;
+    margin-top: 6px;
+}
+
+/* TARJETA RESUMEN DEL MES */
+.card-dark-green {
+    background-color: #1B4332;
+    color: white;
+}
+.card-dark-header {
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+.summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+}
+.summary-grid strong {
+    color: white;
+    font-size: 13px;
+}
+.card-dark-green .divider {
+    height: 1px;
+    background-color: rgba(255,255,255,0.2);
+    margin: 12px 0;
+}
+.impact-container {
+    display: flex;
+}
+.impact-title-highlight {
+    color: #FFC107;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+.impact-text p {
+    color: rgba(255,255,255,0.9);
+    font-size: 12px;
+    line-height: 1.3;
+}
+
+/* ================= RECOMPENSAS / BENEFICIOS ================= */
+.points-banner {
+    background-color: #2D6A4F;
+    padding: 24px 16px;
+    text-align: center;
+    border-radius: 0 0 24px 24px;
+    color: white;
+}
+.points-label {
+    color: rgba(255,255,255,0.7);
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    font-weight: bold;
+}
+.points-value-row {
+    margin-top: 8px;
+}
+.points-number {
+    font-size: 36px;
+    font-weight: bold;
+}
+.points-unit {
+    color: rgba(255,255,255,0.7);
+    font-size: 16px;
+}
+
+.list-content {
+    padding: 16px;
+}
+
+.card-reward {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+.store-logo-container {
+    width: 65px;
+    height: 40px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.store-logo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.reward-info {
+    flex: 1;
+    margin-left: 16px;
+}
+.reward-info h3 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+.benefit-text {
+    color: #2D6A4F;
+    font-weight: bold;
+    font-size: 14px;
+    margin: 2px 0;
+}
+.desc-text {
+    color: grey;
+    font-size: 11px;
+}
+
+.reward-action {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+.pts-badge {
+    background-color: #FFF3E0;
+    color: #E65100;
+    font-weight: bold;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 8px;
+}
+.btn-canjear {
+    background-color: #1B4332;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ================= VIVEROS ================= */
+.viveros-intro {
+    color: rgba(0,0,0,0.54);
+    font-weight: 500;
+    font-size: 13px;
+    margin-bottom: 12px;
+    padding-left: 4px;
+}
+.card-vivero {
+    padding: 16px;
+    margin-bottom: 14px;
+}
+.vivero-header h3 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #1B4332;
+}
+.divider-vivero {
+    height: 1px;
+    background-color: #eee;
+    margin: 12px 0;
+}
+.vivero-detail {
+    color: rgba(0,0,0,0.54);
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+.vivero-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+}
+.vivero-tel {
+    font-weight: 600;
+    font-size: 12px;
+    color: #607D8B;
+}
+.btn-ruta {
+    background-color: #1B5E20;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+/* ================= NAV DRAWER ================= */
+.drawer {
+    position: absolute;
+    top: 0;
+    left: -280px;
+    width: 280px;
+    height: 100%;
+    background: white;
+    z-index: 30;
+    transition: left 0.25s cubic-bezier(0.4, 0.0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+}
+.drawer.open {
+    left: 0;
+}
+.drawer-header {
+    background-color: #1B4332;
+    color: white;
+    height: 160px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.drawer-header h2 {
+    font-size: 22px;
+    font-weight: bold;
+}
+.drawer-header p {
+    color: rgba(255,255,255,0.6);
+    font-size: 13px;
+    margin-top: 4px;
+}
+.drawer-layout {
+    padding-top: 8px;
+}
+.drawer-item {
+    display: flex;
+    align-items: center;
+    padding: 16px 24px;
+    color: #333;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.drawer-item.active {
+    background-color: rgba(27, 67, 50, 0.1);
+    color: #1B4332;
+}
+
+.drawer-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 20;
+    display: none;
+}
+.drawer-overlay.open {
+    display: block;
+}
+
+/* SNACKBAR */
+.snackbar {
+    position: absolute;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #323232;
+    color: white;
+    padding: 14px 24px;
+    font-size: 14px;
+    border-radius: 4px;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+    white-space: nowrap;
+    z-index: 40;
+    transition: bottom 0.3s ease-out;
+}
+.snackbar.show {
+    bottom: 24px;
+}
